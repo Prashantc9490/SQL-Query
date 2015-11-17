@@ -1,0 +1,28 @@
+Many time we have requirement to add 0 in left side or right side, use below to achieve that.
+
+-- temp table
+CREATE TABLE #Temp(Id INT)
+GO 
+
+-- sample data 
+INSERT INTO #Temp SELECT
+1 UNION SELECT
+2 UNION SELECT
+12 UNION SELECT
+123 UNION SELECT
+1234 UNION SELECT
+12345
+
+GO
+SELECT ID
+FROM #TEMP
+
+--adding 0 in left side 
+SELECT ID ,
+FORMAT(ID, '00000') AS LPAD_EXAMPLE
+FROM #TEMP
+
+-- adding 0 in right side
+SELECT ID ,
+FORMAT(ID, '#''00000') AS LPAD_EXAMPLE
+FROM #TEMP
