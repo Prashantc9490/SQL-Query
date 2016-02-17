@@ -1,0 +1,19 @@
+I want to create trigger to maintained history, 
+but the requirement is only to insert audit history table when particular column getting updated instead of all columns.
+
+
+Basically we cannot create column level trigger in SQL SERVER, but we can handle; how, see below
+
+CREATE TRIGGER Update_EntryDate
+ON Dbo.Customer
+AFTER UPDATE
+AS
+IF ( UPDATE (EntryDate))
+BEGIN
+Insert Into dbo.TableB (Value1, Value2, Value3)
+Select Value1, Value2, Value3
+From Deleted
+END;
+
+See this link for full explanation 
+http://msdn.microsoft.com/en-us/library/ms187326.aspx
