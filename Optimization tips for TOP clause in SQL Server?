@@ -1,0 +1,41 @@
+Optimization tips for TOP clause in SQL Server? 
+
+Optimization tips for TOP clause in SQL Server
+Most of the times your select query with TOP clause run excellent but when you change top clause value, query will get slower  10 to 15 times.
+The TOP clause specifies that only the first set of rows will be returned from the query result
+Let’s take an example
+CREATE TABLE topclause (id INT PRIMARY KEY CLUSTERED, value INT, comments CHAR(2000))
+GO
+
+BEGIN TRAN
+GO
+DECLARE @i INT
+SET @i=1
+WHILE @i<=500000
+BEGIN
+INSERT INTO topclause VALUES (@i,RAND()*2000000,'comment1' + convert(varchar(20),@i) )
+SET @i=@i+1
+END
+COMMIT TRAN
+GO
+ 
+Update statistics with full scan
+UPDATE STATISTICS topclause WITH fullscan
+
+SET STATISTICS TIME ON
+GO
+SELECT NUM_OF_READS, NUM_OF_BYTES_READ,
+NUM_OF_WRITES, NUM_OF_BYTES_WRITTEN
+FROM SYS.DM_IO_VIRTUAL_FILE_STATS(DB_ID('TEMPDB'), 1)
+GO
+SELECT TOP 100 id, value,comments
+FROM topclause
+WHERE id<50000
+ORDER BY value
+GO
+SELECT NUM_OF_READS, NUM_OF_BYTES_READ,
+NUM_OF_WRITES, NUM_OF_BYTES_WRITTEN
+FROM SYS.DM_IO_VIRTUAL_FILE_STATS(DB_ID('TEMPDB'), 1)
+GO
+SQL Server Execution Times:
+  CPU time = 79 ms,  elapsed time = 53 ms.
