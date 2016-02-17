@@ -1,0 +1,8 @@
+
+Is there a way that we can know how many tables can be create in MS SQL SERVER?
+Maximum number of Tables in a SQL Database 
+Most of the time developer asked “How many tables we can create on a SQL Server database”, even though sometimes interviewer asked same question and it looks weird to developer. 
+Anyways, we are come to the answer of this question.  Actually in SQL Server, Microsoft has not defined any limit on number of tables but there is a limit on the number of Objects in a database.  
+According to Maximum Capacity Specifications for SQL Server Tables per database are limited by number of objects in a database.  Database objects include objects such as tables, views, stored procedures, user-defined functions, triggers, rules, defaults, and constraints. The sum of the number of all objects in a database cannot exceed 2,147,483,647.
+So if there is NO other objects created in a database you can create 2,147,483,647 numbers of tables in SQL Server database. 
+To know more about the maximum sizes and numbers of various objects defined in SQL Server components you can check out: Maximum Capacity Specifications for SQL Server
